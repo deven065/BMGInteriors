@@ -1,0 +1,651 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #FFCC00;
+  --gold-dark: #CC9900;
+  --gold-light: #FFE066;
+  --black: #0f0e0c;
+  --dark: #1a1812;
+  --dark-2: #252219;
+  --surface: #ffffff;
+  --surface-off: #fafaf8;
+  --muted: #6b6b6b;
+  --line: #e8e4dc;
+  --line-dark: #2e2b22;
+}
+
+@theme inline {
+  --color-background: var(--surface);
+  --color-foreground: var(--black);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--surface);
+  color: var(--black);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ─── Typography ─────────────────────────────── */
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.display-heading {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.section-heading {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+}
+
+.kicker::before {
+  content: "";
+  display: block;
+  width: 1.8rem;
+  height: 2px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ─── Layout ─────────────────────────────────── */
+.shell {
+  width: min(1260px, 92vw);
+  margin-inline: auto;
+}
+
+/* ─── Buttons ────────────────────────────────── */
+.btn-gold {
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.9rem 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 0 8px 22px rgba(245, 193, 0, 0.32);
+}
+
+.btn-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(245, 193, 0, 0.46);
+}
+
+.btn-dark {
+  background: var(--dark);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.9rem 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.22s ease, transform 0.22s ease;
+}
+
+.btn-dark:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 0.85rem 1.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease;
+}
+
+.btn-outline:hover {
+  background: var(--gold);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+/* ─── Cards ──────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-color: var(--gold);
+}
+
+/* ─── Dark surface ───────────────────────────── */
+.dark-surface {
+  background: var(--dark);
+  color: #fff;
+}
+
+.dark-surface .kicker {
+  color: var(--gold);
+}
+
+/* ─── Gold accent line ───────────────────────── */
+.gold-line {
+  display: block;
+  width: 3rem;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ─── Nav links ──────────────────────────────── */
+.nav-link {
+  position: relative;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+  color: rgba(255,255,255,0.82);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--gold);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ─── Animations ─────────────────────────────── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(26px);
+  animation: revealUp 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.reveal-fade {
+  opacity: 0;
+  animation: revealFade 1.1s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.12s; }
+.delay-2 { animation-delay: 0.26s; }
+.delay-3 { animation-delay: 0.42s; }
+.delay-4 { animation-delay: 0.58s; }
+
+@keyframes revealUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealFade {
+  to { opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Project card overlay ───────────────────── */
+.proj-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.proj-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15,14,12,0.82) 0%, rgba(15,14,12,0.1) 55%, transparent 100%);
+  transition: opacity 0.35s ease;
+}
+
+.proj-card:hover::after {
+  opacity: 0.72;
+}
+
+.proj-card-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  z-index: 2;
+  transform: translateY(4px);
+  transition: transform 0.35s ease;
+}
+
+.proj-card:hover .proj-card-inner {
+  transform: translateY(0);
+}
+
+.proj-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.proj-card:hover .proj-card-img {
+  transform: scale(1.07);
+}
+
+/* ─── Service icon ───────────────────────────── */
+.service-icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.75rem;
+  background: rgba(245, 193, 0, 0.12);
+  border: 1px solid rgba(245, 193, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover .service-icon {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.card:hover .service-icon svg {
+  stroke: var(--black) !important;
+}
+
+/* ─── Stat badge ─────────────────────────────── */
+.stat-card {
+  border: 1px solid var(--line-dark);
+  border-radius: 1rem;
+  padding: 1.4rem 1.2rem;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+/* ─── Floating Widgets ───────────────────────── */
+
+/* WhatsApp ring pulse */
+@keyframes waPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(37,211,102,0.55), 0 6px 20px rgba(37,211,102,0.4); }
+  70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0),   0 6px 20px rgba(37,211,102,0.4); }
+  100% { box-shadow: 0 0 0 0   rgba(37,211,102,0),   0 6px 20px rgba(37,211,102,0.4); }
+}
+
+/* Gold strip glow pulse */
+@keyframes tabGlow {
+  0%,100% { opacity: 0.75; }
+  50%     { opacity: 1; box-shadow: -3px 0 18px rgba(255,204,0,0.7); }
+}
+
+/* Live availability dot blink */
+@keyframes liveDot {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.4; transform: scale(0.65); }
+}
+
+/* ── Helpline wrapper ── */
+.helpline-wrap {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+}
+
+/* Badge: dark card, only gold strip shows when collapsed */
+.helpline-badge {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: #111009;
+  border: 1px solid rgba(255,204,0,0.14);
+  border-right: none;
+  color: #fff;
+  border-radius: 0.9rem 0 0 0.9rem;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  /* only gold strip visible = 5px */
+  transform: translateX(calc(100% - 5px));
+  box-shadow: -4px 0 24px rgba(0,0,0,0.6), -2px 0 10px rgba(255,204,0,0.18);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.helpline-wrap:hover .helpline-badge {
+  transform: translateX(0);
+  border-color: rgba(255,204,0,0.32);
+  box-shadow: -10px 0 52px rgba(0,0,0,0.75), -4px 0 28px rgba(255,204,0,0.38);
+}
+
+/* Gold gradient strip — the only visible part when collapsed */
+.hb-strip {
+  flex-shrink: 0;
+  width: 5px;
+  align-self: stretch;
+  background: linear-gradient(180deg, #FFDD44 0%, #FFCC00 50%, #CC9900 100%);
+  border-radius: 0.9rem 0 0 0.9rem;
+  animation: tabGlow 2s ease-in-out infinite;
+}
+
+/* Inner row */
+.hb-inner {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.4rem 1rem 0.9rem;
+  gap: 0;
+}
+
+/* Phone icon in gold ring */
+.hb-icon {
+  flex-shrink: 0;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  background: rgba(255,204,0,0.08);
+  border: 1.5px solid rgba(255,204,0,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFCC00;
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.helpline-wrap:hover .hb-icon {
+  background: rgba(255,204,0,0.16);
+  border-color: rgba(255,204,0,0.6);
+}
+
+/* Vertical gold divider */
+.hb-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: linear-gradient(
+    transparent,
+    rgba(255,204,0,0.22) 25%,
+    rgba(255,204,0,0.22) 75%,
+    transparent
+  );
+  margin: 0 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Text stack */
+.hb-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hb-available {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  line-height: 1;
+}
+
+.hb-dot-live {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  animation: liveDot 1.6s ease-in-out infinite;
+}
+
+.hb-label {
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #FFCC00;
+  line-height: 1;
+}
+
+.hb-number {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.hb-cta {
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  line-height: 1;
+  transition: color 0.25s;
+}
+
+.helpline-wrap:hover .hb-cta {
+  color: rgba(255,204,0,0.7);
+}
+
+/* ── WhatsApp FAB ── */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.25rem;
+  z-index: 50;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: waPulse 2.4s ease-in-out infinite;
+  transition: transform 0.25s ease;
+}
+
+.whatsapp-btn::after {
+  content: "Chat with us";
+  position: absolute;
+  right: calc(100% + 0.65rem);
+  background: #111009;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  padding: 0.38rem 0.7rem;
+  border-radius: 0.4rem;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.whatsapp-btn:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.12);
+}
+
+/* ── Free Consult Tab ── */
+.free-consult-tag {
+  position: fixed;
+  bottom: 0;
+  left: 1.5rem;
+  z-index: 50;
+  background: #111009;
+  border: 1px solid rgba(255,204,0,0.22);
+  border-bottom: none;
+  color: #FFCC00;
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.15rem;
+  border-radius: 0.65rem 0.65rem 0 0;
+  box-shadow: 0 -4px 22px rgba(0,0,0,0.5), 0 -2px 12px rgba(255,204,0,0.16);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s, transform 0.25s ease, border-color 0.2s, box-shadow 0.25s;
+}
+
+.free-consult-tag::before {
+  content: "";
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FFCC00;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.free-consult-tag::after {
+  content: "↗";
+  font-size: 0.8rem;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.free-consult-tag:hover {
+  background: #1a1812;
+  border-color: rgba(255,204,0,0.48);
+  transform: translateY(-3px);
+  box-shadow: 0 -8px 32px rgba(0,0,0,0.55), 0 -4px 20px rgba(255,204,0,0.26);
+}
+
+.free-consult-tag:hover::after {
+  transform: translate(2px, -2px);
+}
+
+/* ─── Input / Form ───────────────────────────── */
+.form-input {
+  width: 100%;
+  background: var(--dark-2);
+  border: 1px solid var(--line-dark);
+  border-radius: 0.6rem;
+  padding: 0.85rem 1rem;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: border-color 0.25s ease;
+  outline: none;
+  font-family: inherit;
+}
+
+.form-input::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.form-input:focus {
+  border-color: var(--gold);
+}
+
+/* ─── Mobile ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .shell {
+    width: min(1260px, 94vw);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .proj-card:hover .proj-card-img {
+    transform: none;
+  }
+}
+
