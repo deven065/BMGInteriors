@@ -69,13 +69,12 @@ const stats = [
 
 export default function AboutPage() {
   useEffect(() => {
-    // Enable scroll-snap on the page
     const html = document.documentElement;
     html.style.scrollSnapType = "y mandatory";
     html.style.scrollBehavior = "smooth";
 
-    // Tear-in animation via IntersectionObserver
     const sections = document.querySelectorAll<HTMLElement>(".tear-section");
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -84,13 +83,25 @@ export default function AboutPage() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0 }
     );
-    sections.forEach((s) => observer.observe(s));
+
+    // Mark sections as animation-ready, but reveal those already in view instantly
+    sections.forEach((s) => {
+      const rect = s.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      s.classList.add("tear-ready");
+      if (inView) {
+        // Skip animation for visible sections — show immediately
+        requestAnimationFrame(() => s.classList.add("torn"));
+      }
+      observer.observe(s);
+    });
 
     return () => {
       html.style.scrollSnapType = "";
       html.style.scrollBehavior = "";
+      sections.forEach((s) => s.classList.remove("tear-ready", "torn"));
       observer.disconnect();
     };
   }, []);
@@ -100,12 +111,13 @@ export default function AboutPage() {
       <style>{`
         .tear-section {
           scroll-snap-align: start;
-          scroll-margin-top: 0;
+        }
+        .tear-section.tear-ready {
           clip-path: inset(50% 0 50% 0);
-          transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+          transition: clip-path 0.85s cubic-bezier(0.77, 0, 0.18, 1);
           will-change: clip-path;
         }
-        .tear-section.torn {
+        .tear-section.tear-ready.torn {
           clip-path: inset(0% 0 0% 0);
         }
       `}</style>
