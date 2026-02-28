@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const team = [
   { name: "B. Ghosh", role: "Founder & Principal Architect", exp: "35+ yrs", initial: "B" },
@@ -66,11 +68,51 @@ const stats = [
 ];
 
 export default function AboutPage() {
+  useEffect(() => {
+    // Enable scroll-snap on the page
+    const html = document.documentElement;
+    html.style.scrollSnapType = "y mandatory";
+    html.style.scrollBehavior = "smooth";
+
+    // Tear-in animation via IntersectionObserver
+    const sections = document.querySelectorAll<HTMLElement>(".tear-section");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("torn");
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    sections.forEach((s) => observer.observe(s));
+
+    return () => {
+      html.style.scrollSnapType = "";
+      html.style.scrollBehavior = "";
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <>
+      <style>{`
+        .tear-section {
+          scroll-snap-align: start;
+          scroll-margin-top: 0;
+          clip-path: inset(50% 0 50% 0);
+          transition: clip-path 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+          will-change: clip-path;
+        }
+        .tear-section.torn {
+          clip-path: inset(0% 0 0% 0);
+        }
+      `}</style>
+
       {/* Hero */}
       <section
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="tear-section relative min-h-screen flex items-center overflow-hidden"
         style={{ background: "#0f0e0c" }}
       >
         <div
@@ -99,7 +141,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story + Stats */}
-      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full">
           <div>
             <span className="kicker">Our Story</span>
@@ -145,7 +187,7 @@ export default function AboutPage() {
       </section>
 
       {/* Disciplines */}
-      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="shell py-24 w-full">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:items-center">
 
@@ -214,7 +256,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="shell py-24 w-full">
           <div className="mb-16">
             <span className="kicker">Our Journey</span>
@@ -244,7 +286,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="shell py-24 w-full">
           <div className="text-center mb-16">
             <span
@@ -281,7 +323,7 @@ export default function AboutPage() {
       </section>
 
       {/* Clients */}
-      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="shell py-24 w-full">
           <div className="text-center mb-16">
             <span className="kicker">Clientele</span>
@@ -305,7 +347,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="shell text-center max-w-2xl mx-auto py-24 w-full">
           <span
             className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
