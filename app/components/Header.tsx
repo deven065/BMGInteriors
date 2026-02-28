@@ -49,8 +49,9 @@ export default function Header() {
 
         {/* CTA + mobile toggle */}
         <div className="flex items-center gap-3">
-          <Link href="/contact" className="btn-gold hidden sm:inline-flex text-xs px-5 py-2.5">
-            Free Consultation
+          <Link href="/contact" className="btn-cta-header hidden sm:inline-flex">
+            <span className="btn-label">Free Consultation</span>
+            <span className="btn-arrow">→</span>
           </Link>
           <button
             className="flex flex-col gap-1.5 p-2 md:hidden"
@@ -89,9 +90,10 @@ export default function Header() {
           <Link
             href="/contact"
             onClick={() => setMenuOpen(false)}
-            className="btn-gold mt-3 self-start text-xs px-5 py-2.5"
+            className="btn-cta-header mt-3 self-start"
           >
-            Free Consultation
+            <span className="btn-label">Free Consultation</span>
+            <span className="btn-arrow">→</span>
           </Link>
         </div>
       </div>
