@@ -78,13 +78,13 @@ export default function ProjectsPage() {
         style={{ background: "linear-gradient(135deg, #0f0e0c 0%, #1e1a12 100%)" }}
       >
         <div className="shell">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
+          <p data-reveal="fade" className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
             Portfolio
           </p>
-          <h1 className="display-heading text-white mt-4 max-w-2xl">
-            Our <span style={{ color: "#FFCC00" }}>Projects</span>
+          <h1 data-reveal="up" className="display-heading text-white mt-4 max-w-2xl">
+            Our <span className="text-shimmer">Projects</span>
           </h1>
-          <p className="mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
+          <p data-reveal="up" data-delay="150" className="mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
             A curated selection of our residential, commercial, hospitality, and retail projects across Mumbai and India.
           </p>
         </div>
@@ -112,7 +112,7 @@ export default function ProjectsPage() {
       {/* Projects grid */}
       <section className="py-14 md:py-20 bg-white">
         <div className="shell">
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div data-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {projects.map((p) => (
               <div
                 key={p.name}

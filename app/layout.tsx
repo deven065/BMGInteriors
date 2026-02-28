@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FloatingWidgets from "./components/FloatingWidgets";
+import SmoothAnimations from "./components/SmoothAnimations";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -48,6 +49,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         <FloatingWidgets />
+        <SmoothAnimations />
       </body>
     </html>
   );

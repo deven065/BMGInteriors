@@ -62,13 +62,13 @@ export default function ServicesPage() {
         style={{ background: "linear-gradient(135deg, #0f0e0c 0%, #1e1a12 100%)" }}
       >
         <div className="shell">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
+          <p data-reveal="fade" className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
             What We Do
           </p>
-          <h1 className="display-heading text-white mt-4 max-w-2xl">
-            Our <span style={{ color: "#FFCC00" }}>Services</span>
+          <h1 data-reveal="up" className="display-heading text-white mt-4 max-w-2xl">
+            Our <span className="text-shimmer">Services</span>
           </h1>
-          <p className="mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
+          <p data-reveal="up" data-delay="150" className="mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
             End-to-end design, build, and décor services for residential, commercial, and hospitality projects across Mumbai and India.
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function ServicesPage() {
       {/* Services grid */}
       <section className="py-20 md:py-28 bg-white">
         <div className="shell">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div data-stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
               <article key={s.id} className="card p-7">
                 <div className="flex items-center justify-between mb-5">
@@ -119,7 +119,7 @@ export default function ServicesPage() {
               className="absolute left-6 top-6 bottom-6 w-0.5 hidden md:block"
               style={{ background: "linear-gradient(#FFCC00, rgba(255,204,0,0.1))" }}
             />
-            <div className="space-y-5 md:pl-14">
+            <div data-stagger className="space-y-5 md:pl-14">
               {process.map((p) => (
                 <div
                   key={p.step}
