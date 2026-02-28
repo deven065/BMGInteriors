@@ -18,14 +18,8 @@ const milestones = [
 ];
 
 const clients = [
-  "Hiranandani",
-  "Shapoorji Pallonji",
-  "Hikvision",
-  "Coconut Media Box",
-  "Dattani Estate",
-  "RP Enterprises",
-  "Sai Construction Co.",
-  "Shraddha Landmark",
+  "Hiranandani", "Shapoorji Pallonji", "Hikvision", "Coconut Media Box",
+  "Dattani Estate", "RP Enterprises", "Sai Construction Co.", "Shraddha Landmark",
   "Navbharat Trading Company",
 ];
 
@@ -67,6 +61,22 @@ const stats = [
   { n: "3", label: "Core Disciplines" },
 ];
 
+// Curtains component: two panels that fly apart to reveal content
+function Curtains({ color }: { color: string }) {
+  return (
+    <>
+      <div
+        className="curtain-top absolute top-0 left-0 right-0 z-20 pointer-events-none"
+        style={{ height: "50%", background: color }}
+      />
+      <div
+        className="curtain-bottom absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
+        style={{ height: "51%" /* slight overlap removes center gap */, background: color }}
+      />
+    </>
+  );
+}
+
 export default function AboutPage() {
   useEffect(() => {
     const html = document.documentElement;
@@ -83,25 +93,25 @@ export default function AboutPage() {
           }
         });
       },
-      { threshold: 0 }
+      { threshold: 0.1 }
     );
 
-    // Mark sections as animation-ready, but reveal those already in view instantly
     sections.forEach((s) => {
-      const rect = s.getBoundingClientRect();
-      const inView = rect.top < window.innerHeight && rect.bottom > 0;
-      s.classList.add("tear-ready");
-      if (inView) {
-        // Skip animation for visible sections — show immediately
-        requestAnimationFrame(() => s.classList.add("torn"));
-      }
       observer.observe(s);
     });
+
+    // Tear the first visible section open immediately (no delay, feels instant on load)
+    const heroSection = document.querySelector<HTMLElement>(".tear-section");
+    if (heroSection) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => heroSection.classList.add("torn"));
+      });
+    }
 
     return () => {
       html.style.scrollSnapType = "";
       html.style.scrollBehavior = "";
-      sections.forEach((s) => s.classList.remove("tear-ready", "torn"));
+      sections.forEach((s) => s.classList.remove("torn"));
       observer.disconnect();
     };
   }, []);
@@ -109,52 +119,79 @@ export default function AboutPage() {
   return (
     <>
       <style>{`
+        /* Scroll snap per section */
         .tear-section {
           scroll-snap-align: start;
+          position: relative;
+          overflow: hidden;
         }
-        .tear-section.tear-ready {
-          clip-path: inset(50% 0 50% 0);
-          transition: clip-path 0.85s cubic-bezier(0.77, 0, 0.18, 1);
-          will-change: clip-path;
+
+        /* Curtain panels sit over content â€” torn class slides them away */
+        .curtain-top {
+          transform: translateY(0);
+          transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+          will-change: transform;
         }
-        .tear-section.tear-ready.torn {
-          clip-path: inset(0% 0 0% 0);
+        .curtain-bottom {
+          transform: translateY(0);
+          transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
+          will-change: transform;
+        }
+
+        /* When torn: top flies up, bottom flies down */
+        .torn .curtain-top {
+          transform: translateY(-100%);
+        }
+        .torn .curtain-bottom {
+          transform: translateY(100%);
+        }
+
+        /* Gold seam line at the center tear point */
+        .tear-section::after {
+          content: '';
+          position: absolute;
+          left: 0; right: 0;
+          top: calc(50% - 1px);
+          height: 2px;
+          background: #FFCC00;
+          z-index: 19;
+          opacity: 1;
+          transition: opacity 0.3s ease 0.1s;
+          pointer-events: none;
+        }
+        .torn::after {
+          opacity: 0;
         }
       `}</style>
 
-      {/* Hero */}
+      {/* â”€â”€ Hero â”€â”€ dark curtains = #1a1812 */}
       <section
-        className="tear-section relative min-h-screen flex items-center overflow-hidden"
+        className="tear-section min-h-screen flex items-center"
         style={{ background: "#0f0e0c" }}
       >
-        <div
-          className="absolute inset-0 pointer-events-none"
+        <Curtains color="#1a1812" />
+        <div className="absolute inset-0 pointer-events-none z-0"
           style={{ background: "radial-gradient(ellipse 60% 55% at 15% 50%, rgba(255,204,0,0.07) 0%, transparent 70%)" }}
         />
         <div className="shell relative z-10 max-w-3xl py-24">
-          <span
-            className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
-            style={{ color: "#FFCC00" }}
-          >
+          <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
             Who We Are
           </span>
           <h1 className="display-heading text-white">
             About <span style={{ color: "#FFCC00" }}>BMG Interiors</span>
           </h1>
           <div className="mt-7" style={{ width: 48, height: 2, background: "#FFCC00" }} />
-          <p
-            className="mt-8 text-base md:text-lg leading-[1.95] max-w-xl"
-            style={{ color: "rgba(255,255,255,0.55)" }}
-          >
+          <p className="mt-8 text-base md:text-lg leading-[1.95] max-w-xl" style={{ color: "rgba(255,255,255,0.55)" }}>
             A full-service architecture, interior design, and contracting studio
             — 35+ years of delivering extraordinary spaces across India.
           </p>
         </div>
       </section>
 
-      {/* Story + Stats */}
+      {/* â”€â”€ Story + Stats â”€â”€ dark curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <div className="shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full">
+        <Curtains color="#1a1812" />
+        <div className="shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full relative z-10">
           <div>
             <span className="kicker">Our Story</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -198,22 +235,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Disciplines */}
+      {/* â”€â”€ Disciplines â”€â”€ light curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <div className="shell py-24 w-full">
+        <Curtains color="#faf9f6" />
+        <div className="shell py-24 w-full relative z-10">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:items-center">
-
-            {/* Left: intro */}
             <div>
-              <span
-                className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
-                style={{ color: "#FFCC00" }}
-              >
+              <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
                 What We Do
               </span>
               <h2 className="section-heading text-white mb-6">
-                Three Disciplines,{" "}
-                <span style={{ color: "#FFCC00" }}>One Studio</span>
+                Three Disciplines, <span style={{ color: "#FFCC00" }}>One Studio</span>
               </h2>
               <div style={{ width: 48, height: 2, background: "#FFCC00" }} className="mb-8" />
               <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.45)" }}>
@@ -222,21 +254,16 @@ export default function AboutPage() {
                 projects with a single, accountable team.
               </p>
             </div>
-
-            {/* Right: stacked numbered disciplines */}
             <div>
               {disciplines.map((d, i) => (
                 <div key={d.title}>
                   <div className="flex gap-8 items-start py-10 group">
-                    {/* Number */}
                     <span
-                      className="font-display text-5xl font-bold leading-none shrink-0 transition-colors duration-300 group-hover:opacity-100"
+                      className="font-display text-5xl font-bold leading-none shrink-0"
                       style={{ color: "rgba(255,204,0,0.18)", minWidth: 56 }}
                     >
                       0{i + 1}
                     </span>
-
-                    {/* Content */}
                     <div className="flex-1">
                       <div className="flex items-center gap-4 mb-4">
                         <div
@@ -245,16 +272,11 @@ export default function AboutPage() {
                         >
                           {d.icon}
                         </div>
-                        <h3
-                          className="font-bold text-sm tracking-[0.18em] uppercase"
-                          style={{ color: "#fff" }}
-                        >
+                        <h3 className="font-bold text-sm tracking-[0.18em] uppercase" style={{ color: "#fff" }}>
                           {d.title}
                         </h3>
                       </div>
-                      <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.45)" }}>
-                        {d.body}
-                      </p>
+                      <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.45)" }}>{d.body}</p>
                     </div>
                   </div>
                   {i < disciplines.length - 1 && (
@@ -267,9 +289,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
+      {/* â”€â”€ Timeline â”€â”€ dark curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <div className="shell py-24 w-full">
+        <Curtains color="#1a1812" />
+        <div className="shell py-24 w-full relative z-10">
           <div className="mb-16">
             <span className="kicker">Our Journey</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -297,14 +320,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Team */}
+      {/* â”€â”€ Team â”€â”€ light curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <div className="shell py-24 w-full">
+        <Curtains color="#faf9f6" />
+        <div className="shell py-24 w-full relative z-10">
           <div className="text-center mb-16">
-            <span
-              className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5"
-              style={{ color: "#FFCC00" }}
-            >
+            <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5" style={{ color: "#FFCC00" }}>
               Our People
             </span>
             <h2 className="section-heading text-white">
@@ -334,9 +355,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Clients */}
+      {/* â”€â”€ Clients â”€â”€ dark curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <div className="shell py-24 w-full">
+        <Curtains color="#1a1812" />
+        <div className="shell py-24 w-full relative z-10">
           <div className="text-center mb-16">
             <span className="kicker">Clientele</span>
             <h2 className="section-heading mt-5">
@@ -358,13 +380,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* â”€â”€ CTA â”€â”€ light curtains */}
       <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <div className="shell text-center max-w-2xl mx-auto py-24 w-full">
-          <span
-            className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
-            style={{ color: "#FFCC00" }}
-          >
+        <Curtains color="#faf9f6" />
+        <div className="shell text-center max-w-2xl mx-auto py-24 w-full relative z-10">
+          <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
             Start a Project
           </span>
           <h2 className="section-heading text-white mb-10">
