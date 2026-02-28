@@ -70,14 +70,14 @@ export default function AboutPage() {
     <>
       {/* Hero */}
       <section
-        className="relative py-32 md:py-44 overflow-hidden"
+        className="relative min-h-screen flex items-center overflow-hidden"
         style={{ background: "#0f0e0c" }}
       >
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse 60% 55% at 15% 50%, rgba(255,204,0,0.07) 0%, transparent 70%)" }}
         />
-        <div className="shell relative z-10 max-w-3xl">
+        <div className="shell relative z-10 max-w-3xl py-24">
           <span
             className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
             style={{ color: "#FFCC00" }}
@@ -99,8 +99,8 @@ export default function AboutPage() {
       </section>
 
       {/* Story + Stats */}
-      <section className="py-24 md:py-36" style={{ background: "#faf9f6" }}>
-        <div className="shell grid gap-20 lg:grid-cols-2 lg:items-start">
+      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full">
           <div>
             <span className="kicker">Our Story</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -145,8 +145,8 @@ export default function AboutPage() {
       </section>
 
       {/* Disciplines */}
-      <section className="py-24 md:py-36" style={{ background: "#0f0e0c" }}>
-        <div className="shell">
+      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="shell py-24 w-full">
           <div className="text-center mb-16">
             <span
               className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5"
@@ -183,8 +183,8 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-24 md:py-36" style={{ background: "#faf9f6" }}>
-        <div className="shell">
+      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="shell py-24 w-full">
           <div className="mb-16">
             <span className="kicker">Our Journey</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -213,8 +213,8 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-24 md:py-36" style={{ background: "#0f0e0c" }}>
-        <div className="shell">
+      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="shell py-24 w-full">
           <div className="text-center mb-16">
             <span
               className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5"
@@ -250,8 +250,8 @@ export default function AboutPage() {
       </section>
 
       {/* Clients */}
-      <section className="py-24 md:py-36" style={{ background: "#faf9f6" }}>
-        <div className="shell">
+      <section className="min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="shell py-24 w-full">
           <div className="text-center mb-16">
             <span className="kicker">Clientele</span>
             <h2 className="section-heading mt-5">
@@ -274,8 +274,8 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-28 md:py-40" style={{ background: "#0f0e0c" }}>
-        <div className="shell text-center max-w-2xl mx-auto">
+      <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="shell text-center max-w-2xl mx-auto py-24 w-full">
           <span
             className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
             style={{ color: "#FFCC00" }}
