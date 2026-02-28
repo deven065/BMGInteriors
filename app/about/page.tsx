@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -61,57 +61,36 @@ const stats = [
   { n: "3", label: "Core Disciplines" },
 ];
 
-// Curtains component: two panels that fly apart to reveal content
-function Curtains({ color }: { color: string }) {
-  return (
-    <>
-      <div
-        className="curtain-top absolute top-0 left-0 right-0 z-20 pointer-events-none"
-        style={{ height: "50%", background: color }}
-      />
-      <div
-        className="curtain-bottom absolute bottom-0 left-0 right-0 z-20 pointer-events-none"
-        style={{ height: "51%" /* slight overlap removes center gap */, background: color }}
-      />
-    </>
-  );
-}
-
 export default function AboutPage() {
   useEffect(() => {
     const html = document.documentElement;
     html.style.scrollSnapType = "y mandatory";
     html.style.scrollBehavior = "smooth";
 
-    const sections = document.querySelectorAll<HTMLElement>(".tear-section");
+    const sections = document.querySelectorAll<HTMLElement>(".reveal-section");
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("torn");
+            entry.target.classList.add("revealed");
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
-    sections.forEach((s) => {
-      observer.observe(s);
-    });
+    sections.forEach((s) => observer.observe(s));
 
-    // Tear the first visible section open immediately (no delay, feels instant on load)
-    const heroSection = document.querySelector<HTMLElement>(".tear-section");
-    if (heroSection) {
+    if (sections[0]) {
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => heroSection.classList.add("torn"));
+        requestAnimationFrame(() => sections[0].classList.add("revealed"));
       });
     }
 
     return () => {
       html.style.scrollSnapType = "";
       html.style.scrollBehavior = "";
-      sections.forEach((s) => s.classList.remove("torn"));
       observer.disconnect();
     };
   }, []);
@@ -119,61 +98,44 @@ export default function AboutPage() {
   return (
     <>
       <style>{`
-        /* Scroll snap per section */
-        .tear-section {
+        .reveal-section {
           scroll-snap-align: start;
           position: relative;
           overflow: hidden;
         }
-
-        /* Curtain panels sit over content â€” torn class slides them away */
-        .curtain-top {
-          transform: translateY(0);
-          transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
-          will-change: transform;
-        }
-        .curtain-bottom {
-          transform: translateY(0);
-          transition: transform 0.9s cubic-bezier(0.77, 0, 0.18, 1);
-          will-change: transform;
-        }
-
-        /* When torn: top flies up, bottom flies down */
-        .torn .curtain-top {
-          transform: translateY(-100%);
-        }
-        .torn .curtain-bottom {
-          transform: translateY(100%);
-        }
-
-        /* Gold seam line at the center tear point */
-        .tear-section::after {
-          content: '';
+        .reveal-section .wipe {
           position: absolute;
-          left: 0; right: 0;
-          top: calc(50% - 1px);
-          height: 2px;
+          inset: 0;
+          z-index: 20;
           background: #FFCC00;
-          z-index: 19;
-          opacity: 1;
-          transition: opacity 0.3s ease 0.1s;
+          transform: translateX(0%);
+          transition: transform 0.75s cubic-bezier(0.86, 0, 0.07, 1);
           pointer-events: none;
         }
-        .torn::after {
+        .reveal-section.revealed .wipe {
+          transform: translateX(101%);
+        }
+        .reveal-section .reveal-content {
           opacity: 0;
+          transform: translateY(32px);
+          transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+        }
+        .reveal-section.revealed .reveal-content {
+          opacity: 1;
+          transform: translateY(0);
         }
       `}</style>
 
       {/* â”€â”€ Hero â”€â”€ dark curtains = #1a1812 */}
       <section
-        className="tear-section min-h-screen flex items-center"
+        className="reveal-section min-h-screen flex items-center"
         style={{ background: "#0f0e0c" }}
       >
-        <Curtains color="#1a1812" />
         <div className="absolute inset-0 pointer-events-none z-0"
           style={{ background: "radial-gradient(ellipse 60% 55% at 15% 50%, rgba(255,204,0,0.07) 0%, transparent 70%)" }}
         />
-        <div className="shell relative z-10 max-w-3xl py-24">
+        <div className="wipe" />
+        <div className="reveal-content shell max-w-3xl py-24">
           <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
             Who We Are
           </span>
@@ -189,9 +151,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Story + Stats â”€â”€ dark curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <Curtains color="#1a1812" />
-        <div className="shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full">
           <div>
             <span className="kicker">Our Story</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -236,9 +198,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Disciplines â”€â”€ light curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <Curtains color="#faf9f6" />
-        <div className="shell py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell py-24 w-full">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:items-center">
             <div>
               <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
@@ -290,9 +252,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Timeline â”€â”€ dark curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <Curtains color="#1a1812" />
-        <div className="shell py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell py-24 w-full">
           <div className="mb-16">
             <span className="kicker">Our Journey</span>
             <h2 className="section-heading mt-5 mb-0">
@@ -321,9 +283,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Team â”€â”€ light curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <Curtains color="#faf9f6" />
-        <div className="shell py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell py-24 w-full">
           <div className="text-center mb-16">
             <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5" style={{ color: "#FFCC00" }}>
               Our People
@@ -356,9 +318,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Clients â”€â”€ dark curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <Curtains color="#1a1812" />
-        <div className="shell py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell py-24 w-full">
           <div className="text-center mb-16">
             <span className="kicker">Clientele</span>
             <h2 className="section-heading mt-5">
@@ -381,9 +343,9 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ CTA â”€â”€ light curtains */}
-      <section className="tear-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <Curtains color="#faf9f6" />
-        <div className="shell text-center max-w-2xl mx-auto py-24 w-full relative z-10">
+      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+        <div className="wipe" />
+        <div className="reveal-content shell text-center max-w-2xl mx-auto py-24 w-full">
           <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
             Start a Project
           </span>
