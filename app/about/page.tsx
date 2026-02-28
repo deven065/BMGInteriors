@@ -147,37 +147,68 @@ export default function AboutPage() {
       {/* Disciplines */}
       <section className="min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="shell py-24 w-full">
-          <div className="text-center mb-16">
-            <span
-              className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5"
-              style={{ color: "#FFCC00" }}
-            >
-              What We Do
-            </span>
-            <h2 className="section-heading text-white">
-              Three Disciplines, <span style={{ color: "#FFCC00" }}>One Studio</span>
-            </h2>
-            <div className="mx-auto mt-6" style={{ width: 48, height: 2, background: "#FFCC00" }} />
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            {disciplines.map((d) => (
-              <div
-                key={d.title}
-                className="rounded-2xl p-9 transition-all duration-300 hover:-translate-y-1"
-                style={{ background: "#1a1812", border: "1px solid rgba(255,204,0,0.12)" }}
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:items-center">
+
+            {/* Left: intro */}
+            <div>
+              <span
+                className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6"
+                style={{ color: "#FFCC00" }}
               >
-                <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center mb-7"
-                  style={{ background: "rgba(255,204,0,0.09)", color: "#FFCC00" }}
-                >
-                  {d.icon}
+                What We Do
+              </span>
+              <h2 className="section-heading text-white mb-6">
+                Three Disciplines,{" "}
+                <span style={{ color: "#FFCC00" }}>One Studio</span>
+              </h2>
+              <div style={{ width: 48, height: 2, background: "#FFCC00" }} className="mb-8" />
+              <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.45)" }}>
+                Under one roof, BMG Interiors brings together architecture,
+                interior design, and construction — delivering seamless end-to-end
+                projects with a single, accountable team.
+              </p>
+            </div>
+
+            {/* Right: stacked numbered disciplines */}
+            <div>
+              {disciplines.map((d, i) => (
+                <div key={d.title}>
+                  <div className="flex gap-8 items-start py-10 group">
+                    {/* Number */}
+                    <span
+                      className="font-display text-5xl font-bold leading-none shrink-0 transition-colors duration-300 group-hover:opacity-100"
+                      style={{ color: "rgba(255,204,0,0.18)", minWidth: 56 }}
+                    >
+                      0{i + 1}
+                    </span>
+
+                    {/* Content */}
+                    <div className="flex-1">
+                      <div className="flex items-center gap-4 mb-4">
+                        <div
+                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ background: "rgba(255,204,0,0.08)", color: "#FFCC00" }}
+                        >
+                          {d.icon}
+                        </div>
+                        <h3
+                          className="font-bold text-sm tracking-[0.18em] uppercase"
+                          style={{ color: "#fff" }}
+                        >
+                          {d.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.45)" }}>
+                        {d.body}
+                      </p>
+                    </div>
+                  </div>
+                  {i < disciplines.length - 1 && (
+                    <div style={{ height: 1, background: "rgba(255,204,0,0.08)" }} />
+                  )}
                 </div>
-                <h3 className="font-bold text-sm tracking-widest uppercase mb-4" style={{ color: "#fff" }}>
-                  {d.title}
-                </h3>
-                <p className="text-sm leading-[1.95]" style={{ color: "rgba(255,255,255,0.48)" }}>{d.body}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
