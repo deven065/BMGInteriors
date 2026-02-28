@@ -98,6 +98,7 @@ export default function AboutPage() {
   return (
     <>
       <style>{`
+        /* â”€â”€ Base â”€â”€ */
         .reveal-section {
           scroll-snap-align: start;
           position: relative;
@@ -108,27 +109,78 @@ export default function AboutPage() {
           inset: 0;
           z-index: 20;
           background: #FFCC00;
+          pointer-events: none;
+          will-change: transform;
+        }
+
+        /* â”€â”€ 1. Hero: gold panel sweeps RIGHT â”€â”€ */
+        .anim-wipe-right .wipe {
           transform: translateX(0%);
           transition: transform 0.75s cubic-bezier(0.86, 0, 0.07, 1);
-          pointer-events: none;
         }
-        .reveal-section.revealed .wipe {
-          transform: translateX(101%);
-        }
-        .reveal-section .reveal-content {
-          opacity: 0;
-          transform: translateY(32px);
+        .anim-wipe-right.revealed .wipe { transform: translateX(101%); }
+        .anim-wipe-right .reveal-content {
+          opacity: 0; transform: translateY(24px);
           transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
         }
-        .reveal-section.revealed .reveal-content {
-          opacity: 1;
-          transform: translateY(0);
+        .anim-wipe-right.revealed .reveal-content { opacity: 1; transform: translateY(0); }
+
+        /* â”€â”€ 2. Story+Stats: content fades UP (no panel) â”€â”€ */
+        .anim-fade-up .reveal-content {
+          opacity: 0; transform: translateY(56px);
+          transition: opacity 0.95s ease 0.1s, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
         }
+        .anim-fade-up.revealed .reveal-content { opacity: 1; transform: translateY(0); }
+
+        /* â”€â”€ 3. Disciplines: gold panel drops UPWARD â”€â”€ */
+        .anim-wipe-down .wipe {
+          transform: translateY(0%);
+          transition: transform 0.75s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .anim-wipe-down.revealed .wipe { transform: translateY(-101%); }
+        .anim-wipe-down .reveal-content {
+          opacity: 0; transform: translateY(24px);
+          transition: opacity 0.7s ease 0.4s, transform 0.7s ease 0.4s;
+        }
+        .anim-wipe-down.revealed .reveal-content { opacity: 1; transform: translateY(0); }
+
+        /* â”€â”€ 4. Timeline: content slides in from LEFT â”€â”€ */
+        .anim-slide-left .reveal-content {
+          opacity: 0; transform: translateX(-64px);
+          transition: opacity 0.8s ease 0.1s, transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s;
+        }
+        .anim-slide-left.revealed .reveal-content { opacity: 1; transform: translateX(0); }
+
+        /* â”€â”€ 5. Team: content scales up (springy) â”€â”€ */
+        .anim-scale .reveal-content {
+          opacity: 0; transform: scale(0.93);
+          transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .anim-scale.revealed .reveal-content { opacity: 1; transform: scale(1); }
+
+        /* â”€â”€ 6. Clients: gold panel sweeps LEFT â”€â”€ */
+        .anim-wipe-left .wipe {
+          transform: translateX(0%);
+          transition: transform 0.75s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .anim-wipe-left.revealed .wipe { transform: translateX(-101%); }
+        .anim-wipe-left .reveal-content {
+          opacity: 0; transform: translateY(24px);
+          transition: opacity 0.7s ease 0.35s, transform 0.7s ease 0.35s;
+        }
+        .anim-wipe-left.revealed .reveal-content { opacity: 1; transform: translateY(0); }
+
+        /* â”€â”€ 7. CTA: zoom-fade (dramatic close) â”€â”€ */
+        .anim-zoom-fade .reveal-content {
+          opacity: 0; transform: scale(0.88) translateY(40px);
+          transition: opacity 0.9s ease 0.1s, transform 0.9s cubic-bezier(0.34, 1.36, 0.64, 1) 0.1s;
+        }
+        .anim-zoom-fade.revealed .reveal-content { opacity: 1; transform: scale(1) translateY(0); }
       `}</style>
 
       {/* â”€â”€ Hero â”€â”€ dark curtains = #1a1812 */}
       <section
-        className="reveal-section min-h-screen flex items-center"
+        className="reveal-section anim-wipe-right min-h-screen flex items-center"
         style={{ background: "#0f0e0c" }}
       >
         <div className="absolute inset-0 pointer-events-none z-0"
@@ -151,8 +203,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Story + Stats â”€â”€ dark curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <div className="wipe" />
+      <section className="reveal-section anim-fade-up min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="reveal-content shell grid gap-20 lg:grid-cols-2 lg:items-center py-24 w-full">
           <div>
             <span className="kicker">Our Story</span>
@@ -198,7 +249,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Disciplines â”€â”€ light curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
+      <section className="reveal-section anim-wipe-down min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="wipe" />
         <div className="reveal-content shell py-24 w-full">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.6fr] lg:gap-24 lg:items-center">
@@ -252,8 +303,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Timeline â”€â”€ dark curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
-        <div className="wipe" />
+      <section className="reveal-section anim-slide-left min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="reveal-content shell py-24 w-full">
           <div className="mb-16">
             <span className="kicker">Our Journey</span>
@@ -283,8 +333,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Team â”€â”€ light curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <div className="wipe" />
+      <section className="reveal-section anim-scale min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="reveal-content shell py-24 w-full">
           <div className="text-center mb-16">
             <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-5" style={{ color: "#FFCC00" }}>
@@ -318,7 +367,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ Clients â”€â”€ dark curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
+      <section className="reveal-section anim-wipe-left min-h-screen flex items-center" style={{ background: "#faf9f6" }}>
         <div className="wipe" />
         <div className="reveal-content shell py-24 w-full">
           <div className="text-center mb-16">
@@ -343,8 +392,7 @@ export default function AboutPage() {
       </section>
 
       {/* â”€â”€ CTA â”€â”€ light curtains */}
-      <section className="reveal-section min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
-        <div className="wipe" />
+      <section className="reveal-section anim-zoom-fade min-h-screen flex items-center" style={{ background: "#0f0e0c" }}>
         <div className="reveal-content shell text-center max-w-2xl mx-auto py-24 w-full">
           <span className="inline-block text-xs font-bold tracking-[0.22em] uppercase mb-6" style={{ color: "#FFCC00" }}>
             Start a Project
