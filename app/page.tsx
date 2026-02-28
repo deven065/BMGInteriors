@@ -146,7 +146,7 @@ export default function HomePage() {
           }}
         />
 
-        {/* Fine grid pattern — animated drift */}
+        {/* Fine grid pattern */}
         <div
           className="hero-grid-animated"
           style={{
@@ -183,25 +183,21 @@ export default function HomePage() {
           }}
         />
 
-        {/* Floating gold particles */}
+        {/* Gold particles */}
         {[
-          { left: "18%", bottom: "22%", size: 3, dur: "6s",   delay: "0s"   },
-          { left: "30%", bottom: "35%", size: 2, dur: "8s",   delay: "1.2s" },
-          { left: "44%", bottom: "18%", size: 4, dur: "5.5s", delay: "2.4s" },
-          { left: "58%", bottom: "28%", size: 2, dur: "7.5s", delay: "0.6s" },
-          { left: "70%", bottom: "40%", size: 3, dur: "9s",   delay: "3s"   },
-          { left: "82%", bottom: "15%", size: 2, dur: "6.5s", delay: "1.8s" },
-          { left: "12%", bottom: "55%", size: 2, dur: "7s",   delay: "4s"   },
-          { left: "90%", bottom: "50%", size: 3, dur: "5s",   delay: "2s"   },
+          { left: "12%",  bottom: "15%", dur: "7s",  delay: "0s"   },
+          { left: "22%",  bottom: "10%", dur: "9s",  delay: "1.5s" },
+          { left: "35%",  bottom: "20%", dur: "6s",  delay: "0.8s" },
+          { left: "50%",  bottom: "8%",  dur: "8s",  delay: "2s"   },
+          { left: "62%",  bottom: "18%", dur: "10s", delay: "0.3s" },
+          { left: "73%",  bottom: "12%", dur: "7.5s",delay: "1.2s" },
+          { left: "82%",  bottom: "22%", dur: "6.5s",delay: "2.5s" },
+          { left: "90%",  bottom: "9%",  dur: "9.5s",delay: "0.6s" },
         ].map((p, i) => (
           <div
             key={i}
             className="gold-particle"
-            style={{
-              left: p.left, bottom: p.bottom,
-              width: p.size, height: p.size,
-              animationDuration: p.dur, animationDelay: p.delay,
-            }}
+            style={{ left: p.left, bottom: p.bottom, "--dur": p.dur, "--delay": p.delay } as React.CSSProperties}
           />
         ))}
 
@@ -234,7 +230,7 @@ export default function HomePage() {
               }}
             >
               Architecture &amp;<br />
-              <em className="text-shimmer" style={{ fontStyle: "normal" }}>Interior Design</em>
+              <em style={{ fontStyle: "normal" }} className="text-shimmer">Interior Design</em>
               <br />Redefined.
             </h1>
 
@@ -609,7 +605,6 @@ export default function HomePage() {
         </div>
         <div className="shell" style={{ position: "relative", zIndex: 2 }}>
           <div
-            data-reveal="scale"
             style={{
               display: "flex", flexDirection: "column", alignItems: "center",
               gap: "0.75rem", textAlign: "center",
@@ -740,7 +735,6 @@ export default function HomePage() {
         />
         <div className="shell" style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
           <p
-            data-reveal="fade"
             style={{
               fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em",
               textTransform: "uppercase", color: "#FFCC00", marginBottom: "1rem",
@@ -749,7 +743,6 @@ export default function HomePage() {
             Ready to Transform Your Space?
           </p>
           <h2
-            data-reveal="up"
             style={{
               fontFamily: "var(--font-playfair), Georgia, serif",
               fontSize: "clamp(1.9rem, 4vw, 3.2rem)",
@@ -758,11 +751,9 @@ export default function HomePage() {
               lineHeight: 1.2,
             }}
           >
-            Let&apos;s Build Something <span className="text-shimmer">Extraordinary</span> Together
+            Let&apos;s Build Something Extraordinary Together
           </h2>
           <p
-            data-reveal="up"
-            data-delay="120"
             style={{
               fontSize: "0.95rem", lineHeight: 1.8,
               color: "rgba(255,255,255,0.5)",
@@ -771,7 +762,7 @@ export default function HomePage() {
           >
             From concept to completion — our team handles every detail so you can simply enjoy the result.
           </p>
-          <div data-reveal="up" data-delay="240" style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/contact" className="btn-gold">GET QUOTATION →</Link>
             <a href="tel:+919920100053" className="btn-outline">CALL +91 99201 00053</a>
           </div>
