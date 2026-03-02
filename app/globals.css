@@ -861,6 +861,24 @@ main {
   animation: page-in 0.6s cubic-bezier(0.22,1,0.36,1) both;
 }
 
+/* ─── Process grid responsive ──────────────────── */
+@media (max-width: 768px) {
+  .process-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  .process-grid > div {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 0 !important;
+  }
+  .process-grid > div > div:first-child {
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
+  }
+}
+
 /* ─── Mobile overrides ─────────────────────────── */
 @media (hover: none) {
   .cursor-glow { display: none; }
