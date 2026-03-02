@@ -149,7 +149,7 @@ export default function ServicesPage() {
         <div className="shell relative z-10">
           <div style={{ maxWidth: 680 }}>
             <p
-              data-reveal="up"
+              className="reveal-up"
               style={{
                 display: "inline-flex", alignItems: "center", gap: "0.75rem",
                 fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.22em",
@@ -160,8 +160,7 @@ export default function ServicesPage() {
               What We Do
             </p>
             <h1
-              data-reveal="up"
-              data-delay="120"
+              className="reveal-up delay-1"
               style={{
                 fontFamily: "var(--font-playfair), Georgia, serif",
                 fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 900,
@@ -171,13 +170,11 @@ export default function ServicesPage() {
               Our <em style={{ fontStyle: "normal", color: "#FFCC00" }}>Services</em>
             </h1>
             <div
-              data-reveal="up"
-              data-delay="220"
+              className="reveal-up delay-2"
               style={{ width: 48, height: 3, background: "#FFCC00", borderRadius: 2, margin: "1.75rem 0 1.5rem" }}
             />
             <p
-              data-reveal="up"
-              data-delay="340"
+              className="reveal-up delay-3"
               style={{ fontSize: "1.05rem", lineHeight: 1.9, color: "rgba(255,255,255,0.55)", maxWidth: 540 }}
             >
               End-to-end design, build, and décor solutions for residential,

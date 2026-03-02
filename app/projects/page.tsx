@@ -78,13 +78,13 @@ export default function ProjectsPage() {
         style={{ background: "linear-gradient(135deg, #0f0e0c 0%, #1e1a12 100%)" }}
       >
         <div className="shell">
-          <p data-reveal="up" className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
+          <p className="reveal-up text-xs font-bold tracking-[0.2em] uppercase" style={{ color: "#FFCC00" }}>
             Portfolio
           </p>
-          <h1 data-reveal="up" data-delay="130" className="display-heading text-white mt-4 max-w-2xl">
+          <h1 className="reveal-up delay-1 display-heading text-white mt-4 max-w-2xl">
             Our <span style={{ color: "#FFCC00" }}>Projects</span>
           </h1>
-          <p data-reveal="up" data-delay="260" className="mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
+          <p className="reveal-up delay-2 mt-6 max-w-xl leading-8 text-base" style={{ color: "rgba(255,255,255,0.62)" }}>
             A curated selection of our residential, commercial, hospitality, and retail projects across Mumbai and India.
           </p>
         </div>
