@@ -137,12 +137,36 @@ export default function HomePage() {
           alignItems: "center",
         }}
       >
+        {/* ── Video background ── */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            position: "absolute", inset: 0, width: "100%", height: "100%",
+            objectFit: "cover", objectPosition: "center",
+            pointerEvents: "none", zIndex: 0,
+          }}
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero.webm" type="video/webm" />
+        </video>
+
+        {/* ── Dark overlay over video ── */}
+        <div
+          style={{
+            position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none",
+            background: "rgba(10, 9, 7, 0.72)",
+          }}
+        />
+
         {/* Dark radial spotlight top-right */}
         <div
           style={{
-            position: "absolute", inset: 0, pointerEvents: "none",
+            position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2,
             background:
-              "radial-gradient(ellipse 75% 65% at 80% 20%, rgba(30,45,60,0.9) 0%, transparent 65%), radial-gradient(ellipse 55% 55% at 15% 85%, rgba(255,204,0,0.06) 0%, transparent 55%)",
+              "radial-gradient(ellipse 75% 65% at 80% 20%, rgba(30,45,60,0.7) 0%, transparent 65%), radial-gradient(ellipse 55% 55% at 15% 85%, rgba(255,204,0,0.06) 0%, transparent 55%)",
           }}
         />
 
@@ -150,7 +174,7 @@ export default function HomePage() {
         <div
           className="hero-grid-animated"
           style={{
-            position: "absolute", inset: 0, pointerEvents: "none",
+            position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2,
             backgroundImage:
               "linear-gradient(rgba(255,204,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,204,0,0.03) 1px, transparent 1px)",
             backgroundSize: "80px 80px",
@@ -162,14 +186,14 @@ export default function HomePage() {
           style={{
             position: "absolute", top: "-20%", right: "-14%",
             width: "600px", height: "600px", borderRadius: "50%",
-            border: "1px solid rgba(255,204,0,0.07)", pointerEvents: "none",
+            border: "1px solid rgba(255,204,0,0.07)", pointerEvents: "none", zIndex: 2,
           }}
         />
         <div
           style={{
             position: "absolute", top: "-5%", right: "-5%",
             width: "360px", height: "360px", borderRadius: "50%",
-            border: "1px solid rgba(255,204,0,0.1)", pointerEvents: "none",
+            border: "1px solid rgba(255,204,0,0.1)", pointerEvents: "none", zIndex: 2,
           }}
         />
 
@@ -179,7 +203,7 @@ export default function HomePage() {
             position: "absolute", left: "calc((100vw - min(1260px, 92vw)) / 2)",
             top: "20%", bottom: "20%", width: "2px",
             background: "linear-gradient(transparent, #FFCC00 30%, #FFCC00 70%, transparent)",
-            opacity: 0.18, pointerEvents: "none",
+            opacity: 0.18, pointerEvents: "none", zIndex: 2,
           }}
         />
 
@@ -268,7 +292,7 @@ export default function HomePage() {
         <div
           style={{
             position: "absolute", bottom: 0, left: 0, right: 0, height: "180px",
-            background: "linear-gradient(transparent, rgba(0,0,0,0.6))", pointerEvents: "none",
+            background: "linear-gradient(transparent, rgba(0,0,0,0.6))", pointerEvents: "none", zIndex: 2,
           }}
         />
       </section>
