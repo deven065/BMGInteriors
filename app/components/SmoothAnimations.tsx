@@ -4,30 +4,40 @@ import { useEffect } from "react";
 export default function SmoothAnimations() {
   useEffect(() => {
     /* ── 1. Scroll Reveal ───────────────────────────────────────── */
+    const showEl = (el: HTMLElement) => {
+      const delay = Number(el.dataset.delay ?? 0);
+      setTimeout(() => el.classList.add("is-visible"), delay);
+    };
+
     const revealIo = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const delay = Number(el.dataset.delay ?? 0);
-            setTimeout(() => el.classList.add("is-visible"), delay);
-            revealIo.unobserve(el);
+            showEl(entry.target as HTMLElement);
+            revealIo.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -48px 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -48px 0px" }
     );
 
-    document.querySelectorAll("[data-reveal]").forEach((el) => revealIo.observe(el));
-
-    /* Auto-stagger children of [data-stagger] */
+    /* Collect all reveal targets (including stagger children) */
     document.querySelectorAll("[data-stagger]").forEach((parent) => {
       Array.from(parent.children).forEach((child, i) => {
         const el = child as HTMLElement;
         if (!el.dataset.reveal) el.setAttribute("data-reveal", "up");
         el.dataset.delay = String(i * 100);
-        revealIo.observe(el);
       });
+    });
+
+    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      /* Already in viewport — show immediately (with optional delay for hero stagger) */
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        showEl(el);
+      } else {
+        revealIo.observe(el);
+      }
     });
 
     /* ── 2. Count-up numbers ──────────────────────────────────── */
